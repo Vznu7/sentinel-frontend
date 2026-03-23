@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardioScan - Patient Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260323f" />
+  <script defer src="config.js?v=20260323f"></script>
+  <script defer src="app.js?v=20260323f"></script>
+  <script defer src="patients.js?v=20260323f"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">
+        <div class="logo-badge">💓</div>
+        <span>CardioScan</span>
+      </div>
+      <button id="btnOpenModal" class="btn btn-primary">New Patient</button>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <h1>Heart Health Monitor</h1>
+      <p>Manage patient profiles, trigger real-time scans, and review AI-assisted cardiac reports.</p>
+      <div class="section-row">
+        <input id="searchInput" class="input" type="text" placeholder="Search patient by name" />
+      </div>
+    </section>
+
+    <section id="patientGrid" class="grid-patients" aria-live="polite"></section>
+
+    <section id="emptyState" class="card empty-state" style="display:none;">
+      <div class="empty-illustration">🫀</div>
+      <h3>No patients yet</h3>
+      <p class="muted">Create your first patient profile to begin scanning.</p>
+      <button id="btnEmptyCreate" class="btn btn-primary">Create Patient</button>
+    </section>
+  </main>
+
+  <div id="patientModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="card modal-card">
+      <h3 id="modalTitle">Add New Patient</h3>
+      <form id="patientForm" novalidate>
+        <div class="form-grid">
+          <div class="form-full">
+            <label for="name">Full Name</label>
+            <input id="name" class="input" type="text" required />
+          </div>
+
+          <div>
+            <label for="age">Age</label>
+            <input id="age" class="input" type="number" min="0" max="120" />
+          </div>
+
+          <div>
+            <label for="gender">Gender</label>
+            <select id="gender" class="select">
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="blood_group">Blood Group</label>
+            <select id="blood_group" class="select">
+              <option value="">Select</option>
+              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+              <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="phone">Phone Number</label>
+            <input id="phone" class="input" type="text" />
+          </div>
+        </div>
+
+        <p id="formError" class="alert" style="display:none;"></p>
+
+        <div class="actions-row">
+          <button id="btnCreatePatient" type="submit" class="btn btn-primary">Create Patient</button>
+          <button id="btnCloseModal" type="button" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="offlineBanner" class="offline-banner"></div>
+</body>
+</html>

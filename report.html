@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardioScan - Scan Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260323f" />
+  <script defer src="config.js?v=20260323f"></script>
+  <script defer src="app.js?v=20260323f"></script>
+  <script defer src="report.js?v=20260323f"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="index.html">
+        <div class="logo-badge">💓</div>
+        <span>CardioScan</span>
+      </a>
+      <div class="actions-row" style="margin:0;">
+        <button id="btnPrintTop" class="btn btn-secondary">Print</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="card report-header">
+      <h1 style="margin:0;">Cardiac Scan Report</h1>
+      <p id="reportHeadMeta" class="muted" style="margin:0.4rem 0 0;">Loading...</p>
+
+      <div id="statusBanner" class="status-banner status-normal">--</div>
+
+      <div class="actions-row">
+        <button id="btnPrint" class="btn btn-primary">Download Report as PDF</button>
+        <a id="btnBackPatient" class="btn btn-secondary" href="index.html">Back to Patient Profile</a>
+      </div>
+    </section>
+
+    <section class="metrics-grid">
+      <article class="card metric-card">
+        <p class="muted" style="margin:0;">Heart Rate</p>
+        <div id="metricHr" class="metric-value">--</div>
+        <span id="metricHrStatus" class="badge badge-muted">--</span>
+      </article>
+
+      <article class="card metric-card">
+        <p class="muted" style="margin:0;">Blood Pressure</p>
+        <div id="metricBp" class="metric-value">--</div>
+        <span id="metricBpStatus" class="badge badge-muted">--</span>
+      </article>
+
+      <article class="card metric-card">
+        <p class="muted" style="margin:0;">Pulse Transit Time</p>
+        <div id="metricPtt" class="metric-value">--</div>
+        <span class="badge badge-muted">seconds</span>
+      </article>
+
+      <article class="card metric-card">
+        <p class="muted" style="margin:0;">SpO2</p>
+        <div id="metricSpo2" class="metric-value">--</div>
+        <span id="metricSpo2Status" class="badge badge-muted">--</span>
+        <p class="muted" style="margin:0.3rem 0 0; font-size:0.75rem;">(estimated)</p>
+      </article>
+
+    </section>
+
+    <section class="analysis-grid">
+      <article class="card report-card">
+        <h3 style="margin:0;">AI Analysis</h3>
+        <p style="margin:0.6rem 0 0;">Prediction: <strong id="predictionLabel">--</strong></p>
+        <p style="margin:0.55rem 0 0;">Health Status: <span id="healthStatus" class="badge badge-muted">--</span></p>
+        <p id="breathingLine" style="margin:0.55rem 0 0;">🫁 Breathing Rate: -- breaths/min - Unknown</p>
+
+        <div>
+          <h4 style="margin:0.9rem 0 0.5rem;">Feature Importance</h4>
+          <div id="featureBars" class="feature-bars"></div>
+        </div>
+      </article>
+
+      <article class="card report-card">
+        <h3 style="margin:0;">Recommendations</h3>
+        <ul id="suggestionList" class="suggestions"></ul>
+      </article>
+    </section>
+
+    <section class="card report-card" style="margin-top:0.8rem;">
+      <h3 style="margin:0;">Respiratory Health Indicators</h3>
+
+      <div class="resp-grid">
+        <div class="resp-row">
+          <div>
+            <p class="resp-label">Breathing Rate</p>
+            <p id="respBreathingValue" class="resp-value">-- breaths/min</p>
+          </div>
+          <span id="respBreathingStatus" class="badge badge-muted">--</span>
+        </div>
+
+        <div class="resp-row">
+          <div>
+            <p class="resp-label">SpO2</p>
+            <p id="respSpo2Value" class="resp-value">--%</p>
+          </div>
+          <span id="respSpo2Status" class="badge badge-muted">--</span>
+        </div>
+
+        <div class="resp-row">
+          <div>
+            <p class="resp-label">Heart Rate</p>
+            <p id="respHrValue" class="resp-value">-- BPM</p>
+          </div>
+          <span id="respHrStatus" class="badge badge-muted">--</span>
+        </div>
+      </div>
+
+      <div class="resp-overall">
+        <p class="resp-label" style="margin:0;">Overall Status</p>
+        <p style="margin:0.45rem 0 0;">
+          <span id="respOverallStatus" class="badge badge-muted">--</span>
+        </p>
+      </div>
+
+      <div class="resp-recommend">
+        <p class="resp-label" style="margin:0;">Recommendation</p>
+        <p id="respRecommendation" style="margin:0.45rem 0 0;">--</p>
+      </div>
+
+      <p class="muted resp-disclaimer" style="margin:0.8rem 0 0;">
+        This AI-assisted screening tool provides health indicators only. It does not diagnose medical conditions. Always consult a qualified healthcare professional for medical advice.
+      </p>
+    </section>
+
+    <section class="card report-card" style="margin-top:0.8rem;">
+      <h3 style="margin:0;">Waveform Display</h3>
+      <p class="muted" style="margin:0.4rem 0 0;">
+        Live ECG/PPG visualization is available in the backend monitoring interface.
+      </p>
+      <p class="muted" style="margin:0.2rem 0 0;">
+        Frontend waveform animation has been disabled for presentation mode.
+      </p>
+    </section>
+  </main>
+
+  <div id="offlineBanner" class="offline-banner"></div>
+</body>
+</html>

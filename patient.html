@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardioScan - Patient Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260323f" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="config.js?v=20260323f"></script>
+  <script defer src="app.js?v=20260323f"></script>
+  <script defer src="patient.js?v=20260323f"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="index.html">
+        <div class="logo-badge">💓</div>
+        <span>CardioScan</span>
+      </a>
+      <a href="index.html" class="btn btn-secondary">← Back</a>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="profile-grid">
+      <article class="card profile-card">
+        <div class="profile-header">
+          <div id="profileAvatar" class="avatar avatar-lg">--</div>
+          <div>
+            <h2 id="patientName" style="margin:0;">Loading...</h2>
+            <p id="patientMeta" class="muted" style="margin:0.35rem 0 0;">--</p>
+          </div>
+        </div>
+
+        <div id="patientDetails" class="meta-list"></div>
+
+        <div class="actions-row">
+          <button id="btnStartScan" class="btn btn-primary scan-btn">Start Scan</button>
+          <button id="btnUploadCsv" class="btn btn-success" type="button">Upload CSV Scan</button>
+          <button id="btnEditPatient" class="btn btn-secondary">Edit Patient Info</button>
+          <button id="btnDeletePatient" class="btn btn-danger" type="button">Delete Patient</button>
+        </div>
+        <input id="csvFileInput" type="file" accept=".csv,text/csv" style="display:none;" />
+      </article>
+
+      <article class="card profile-card">
+        <h3 style="margin:0;">Scan History</h3>
+        <p class="muted" style="margin:0.5rem 0 0;">Latest scans for this patient</p>
+
+        <div id="scanTimeline" class="timeline"></div>
+      </article>
+    </section>
+
+    <section class="card report-card" style="margin-top:0.8rem;">
+      <h3 style="margin:0;">Vital Trends</h3>
+      <p id="trendEmpty" class="muted" style="margin:0.5rem 0 0; display:none;">Not enough scan data for trend</p>
+      <div id="trendWrap" style="margin-top:0.7rem; height:320px;">
+        <canvas id="trendChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <div id="editModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+    <div class="card modal-card">
+      <h3 id="editTitle">Edit Patient Info</h3>
+      <form id="editForm" novalidate>
+        <div class="form-grid">
+          <div class="form-full">
+            <label for="edit_name">Full Name</label>
+            <input id="edit_name" class="input" type="text" required />
+          </div>
+
+          <div>
+            <label for="edit_age">Age</label>
+            <input id="edit_age" class="input" type="number" min="0" max="120" />
+          </div>
+
+          <div>
+            <label for="edit_gender">Gender</label>
+            <select id="edit_gender" class="select">
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="edit_blood_group">Blood Group</label>
+            <select id="edit_blood_group" class="select">
+              <option value="">Select</option>
+              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+              <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="edit_phone">Phone Number</label>
+            <input id="edit_phone" class="input" type="text" />
+          </div>
+        </div>
+
+        <p id="editError" class="alert" style="display:none;"></p>
+
+        <div class="actions-row">
+          <button id="btnSaveEdit" class="btn btn-primary" type="submit">Save Changes</button>
+          <button id="btnCloseEdit" class="btn btn-secondary" type="button">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="scanOverlay" class="scan-overlay">
+    <div class="card scan-overlay-card">
+      <div class="spinner"></div>
+      <h3 id="scanOverlayTitle">Scan in progress... Please hold sensor steady</h3>
+      <p id="scanOverlaySub" class="muted">Waiting for scan result</p>
+
+      <div class="ecg-wrap">
+        <div class="ecg-grid">
+          <div class="ecg-line"></div>
+        </div>
+      </div>
+
+      <p class="muted">Do not move hand or sensor until scan completes.</p>
+    </div>
+  </div>
+
+  <div id="offlineBanner" class="offline-banner"></div>
+</body>
+</html>
