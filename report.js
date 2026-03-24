@@ -6,6 +6,8 @@ const statusBanner = document.getElementById('statusBanner');
 
 const metricHr = document.getElementById('metricHr');
 const metricHrStatus = document.getElementById('metricHrStatus');
+const metricPrLevel = document.getElementById('metricPrLevel');
+const metricPrLevelStatus = document.getElementById('metricPrLevelStatus');
 const metricBp = document.getElementById('metricBp');
 const metricBpStatus = document.getElementById('metricBpStatus');
 const metricPtt = document.getElementById('metricPtt');
@@ -140,6 +142,13 @@ function hrIndicator(value) {
   return { label: 'Elevated', severity: 'orange' };
 }
 
+function prLevelFromHr(value) {
+  if (value === null) return '--';
+  if (value < 60) return 'Low';
+  if (value <= 100) return 'Normal';
+  return 'High';
+}
+
 function overallRespStatus(severities) {
   if (severities.includes('red')) {
     return {
@@ -185,6 +194,7 @@ function renderReport(scan) {
   statusBanner.className = `status-banner ${isNormal ? 'status-normal' : 'status-risk'}`;
 
   const hr = numericOrNull(scan.hr);
+  const prLevel = String(scan.pr_level || '').trim() || prLevelFromHr(hr);
   const sbp = numericOrNull(scan.sbp);
   const dbp = numericOrNull(scan.dbp);
   const ptt = numericOrNull(scan.ptt);
@@ -194,6 +204,10 @@ function renderReport(scan) {
   metricHr.textContent = hr === null ? '--' : `${hr} BPM`;
   metricHrStatus.textContent = nullable(scan.hr_status);
   metricHrStatus.className = `badge ${normalizeBadgeByText(scan.hr_status)}`;
+
+  metricPrLevel.textContent = nullable(prLevel);
+  metricPrLevelStatus.textContent = nullable(prLevel);
+  metricPrLevelStatus.className = `badge ${normalizeBadgeByText(prLevel)}`;
 
   metricBp.textContent = sbp === null || dbp === null ? '--/-- mmHg' : `${sbp}/${dbp} mmHg`;
   metricBpStatus.textContent = nullable(scan.bp_status);

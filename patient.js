@@ -93,6 +93,7 @@ function renderTimeline() {
 
       <div class="metrics-inline">
         <span class="metric-chip">HR: ${metricValue(scan.hr, ' BPM')}</span>
+        <span class="metric-chip">PR Level: ${metricValue(scan.pr_level)}</span>
         <span class="metric-chip">BP: ${metricValue(scan.sbp)}/${metricValue(scan.dbp)} mmHg</span>
         <span class="metric-chip">SpO2: ${metricValue(scan.spo2, '%')}</span>
       </div>
